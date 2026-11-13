@@ -65,3 +65,24 @@ A sincronização com Lovable ocorre quando as alterações alcançam a branch `
 - Dados de contato e políticas comerciais/legais da loja.
 
 **Importante:** propostas catalogadas em rascunho não são ofertas de produtos disponíveis para compra.
+
+
+## Imagens da vitrine
+
+A pasta `public/produtos/` contém **seis fotos enviadas pelo lojista**, convertidas para AVIF em resolução **1536 × 1024**, associadas exclusivamente às variantes correspondentes:
+
+| Arquivo | Produto |
+| --- | --- |
+| `pisca-branco-quente.avif` | Pisca-Pisca LED Branco Quente |
+| `pisca-branco-frio.avif` | Pisca-Pisca LED Branco Frio |
+| `pisca-colorido.avif` | Pisca-Pisca LED Colorido |
+| `pisca-azul.avif` | Pisca-Pisca LED Azul |
+| `fita-rgb.avif` | Fita LED RGB Colorida |
+| `fita-rgb-controle.avif` | Fita LED RGB com Controle Remoto |
+
+Também há **28 artes vetoriais SVG exclusivas e conceituais**, uma para cada uma das propostas restantes sem imagem oficial. A Caixa Mágica conserva sua ilustração original `/caixa-magica-conceito.svg`, e os três produtos anteriores mantêm as imagens originais. Assim, os 38 produtos possuem imagem própria sem repetição.
+
+**Revisão obrigatória:** as imagens AVIF foram fornecidas pelo lojista e podem conter inscrições de embalagem que **não foram verificadas**. A presença de palavras como "bivolt", "uso externo", "16 cores" ou "controle remoto" na arte não substitui documentação técnica do fornecedor. Não alterar descrições para repetir essas afirmações sem comprovação. Os 28 SVGs são ilustrações, nunca fotos oficiais ou prova de disponibilidade/itens inclusos. Substituir pelos arquivos fotográficos do SKU real quando forem obtidos.
+
+As imagens são servidas localmente pelo site, sem dependência de host de imagem de terceiros. Fotos fornecidas aparecem completas, sem cortes na página do produto; o clique abre o arquivo em tamanho original.
+

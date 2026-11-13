@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { ArrowRight, CheckCircle2, MapPin, ShieldAlert, Truck } from "lucide-react";
 
 interface ShippingQuote {
@@ -19,7 +19,7 @@ export function ShippingEstimator() {
   const [error, setError] = useState("");
   const [quote, setQuote] = useState<ShippingQuote | null>(null);
   const clean = cep.replace(/\D/g, "");
-  const onSubmit = async (event: React.FormEvent) => {
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setError("");
     setQuote(null);
@@ -74,5 +74,7 @@ function isShippingQuote(value: unknown): value is ShippingQuote {
   return typeof v.cep === "string" && /^\d{8}$/.test(v.cep.replace(/\D/g, "")) && typeof v.carrier === "string" && v.carrier.trim().length > 0 &&
     typeof v.price === "number" && Number.isFinite(v.price) && v.price >= 0 &&
     typeof v.estimatedDays === "number" && Number.isInteger(v.estimatedDays) && v.estimatedDays >= 0 &&
+    (!v.guaranteedUnderSevenDays || v.estimatedDays < 7) &&
+    (!v.firstPurchaseFreeApplied || v.price === 0) &&
     typeof v.guaranteedUnderSevenDays === "boolean" && typeof v.firstPurchaseFreeApplied === "boolean";
 }

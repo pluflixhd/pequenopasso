@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 960" role="img" aria-labelledby="title desc">
+<title id="title">Caixa de presente natalina premium</title>
+<desc id="desc">Conceito ilustrativo de embalagem vermelha com laço dourado. Não representa o conteúdo real do kit.</desc>
+<defs>
+ <radialGradient id="back"><stop offset="0" stop-color="#893344"/><stop offset=".52" stop-color="#591b2c"/><stop offset="1" stop-color="#250e17"/></radialGradient>
+ <linearGradient id="box" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#cf4355"/><stop offset=".32" stop-color="#a22538"/><stop offset="1" stop-color="#601124"/></linearGradient>
+ <linearGradient id="front" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a21c32"/><stop offset=".65" stop-color="#761125"/><stop offset="1" stop-color="#3e0e1b"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2=".9"><stop stop-color="#fce8ac"/><stop offset=".27" stop-color="#b99046"/><stop offset=".48" stop-color="#f4d889"/><stop offset=".72" stop-color="#936020"/><stop offset="1" stop-color="#e9c579"/></linearGradient>
+ <linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#651126"/><stop offset="1" stop-color="#2b0817"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#f2ca79" stop-opacity=".5"/><stop offset="1" stop-color="#f2ca79" stop-opacity="0"/></radialGradient>
+ <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="28"/></filter>
+ <filter id="sm"><feGaussianBlur stdDeviation="2.5"/></filter>
+</defs>
+<rect width="1200" height="960" fill="url(#back)"/>
+<circle cx="920" cy="240" r="450" fill="url(#glow)" opacity=".6"/>
+<circle cx="230" cy="720" r="390" fill="url(#glow)" opacity=".5"/>
+<g fill="#f4d7a0" opacity=".38">
+ <circle cx="145" cy="210" r="3"/><circle cx="270" cy="128" r="2"/><circle cx="910" cy="115" r="3"/><circle cx="1050" cy="400" r="2"/><circle cx="999" cy="720" r="4"/><circle cx="332" cy="660" r="2"/><circle cx="820" cy="840" r="2"/>
+</g>
+<ellipse cx="625" cy="795" rx="375" ry="61" fill="#130911" opacity=".75" filter="url(#shadow)"/>
+<path d="M240 410L660 293l360 141-415 142Z" fill="url(#box)" stroke="#c06462" stroke-width="4"/>
+<path d="M240 410l365 166v265L240 677Z" fill="url(#front)"/>
+<path d="M605 576l415-142v242L605 841Z" fill="url(#side)"/>
+<path d="M236 417l369 169 419-146v45L607 626 237 455Z" fill="url(#gold)"/>
+<path d="M610 579v258l88-36V548Z" fill="url(#gold)"/>
+<path d="M381 465l85-24 350 142-86 28Z" fill="url(#gold)"/>
+<path d="M381 465l-1 278 85 40 1-282Z" fill="url(#gold)"/>
+<path d="M610 581L610 839" stroke="#f3d58e" stroke-width="4" opacity=".45"/>
+<path d="M245 423l355 160" stroke="#f5a1a2" stroke-width="4" opacity=".4"/>
+<path d="M1020 442l-411 146" stroke="#f2be87" stroke-width="3" opacity=".4"/>
+<g transform="translate(598 295)">
+ <path d="M-15 19C-169-103-261-71-221 5c29 52 110 60 218 52" fill="none" stroke="#7d511e" stroke-width="48" stroke-linecap="round"/>
+ <path d="M-12 14C-160-99-250-71-213 3c26 46 104 54 207 53" fill="none" stroke="url(#gold)" stroke-width="39" stroke-linecap="round"/>
+ <path d="M17 17C161-98 248-58 221 3c-23 54-105 59-216 56" fill="none" stroke="#8b541d" stroke-width="49" stroke-linecap="round"/>
+ <path d="M13 15C155-92 239-53 214 5c-20 47-102 57-209 54" fill="none" stroke="url(#gold)" stroke-width="39" stroke-linecap="round"/>
+ <path d="M-6 28C-77 106-83 164-55 240l64-12c-11-69-3-129 35-166" fill="url(#gold)"/>
+ <path d="M16 31c69 83 88 145 77 219l-67-24C30 160 13 120-29 70" fill="url(#gold)"/>
+ <ellipse cy="42" rx="46" ry="35" fill="url(#gold)" stroke="#8b5f2c" stroke-width="3"/>
+ <path d="M-32 23Q0 6 32 23" fill="none" stroke="#fff5d2" stroke-width="4" opacity=".7"/>
+</g>
+<path d="M243 681l360 161" stroke="#d45456" stroke-width="5" opacity=".26"/>
+<path d="M610 844l404-166" stroke="#deb369" stroke-width="4" opacity=".25"/>
+<path d="M115 868Q325 832 480 909" stroke="#e3bb70" stroke-width="1" fill="none" opacity=".4"/>
+<path d="M769 899Q916 850 1110 867" stroke="#e3bb70" stroke-width="1" fill="none" opacity=".3"/>
+</svg>

@@ -15,6 +15,7 @@ export interface Product {
   /** Fotos devem ser reais e corresponder ao SKU. Ilustração não prova composição. */
   image?: string;
   imageIsConcept?: boolean;
+  imageOrigin?: "foto-enviada" | "ilustracao" | "catalogo-anterior";
   visualHue: number;
   price?: number;
   oldPrice?: number;
@@ -96,7 +97,35 @@ const catalog: Product[] = [
   { ...draft("vela", "Vela Christmas Spice", "decoracao", "Linha existente na vitrine anterior. Composição e especificações aguardam validação.", 22), image: vela, badge: "Catálogo anterior", price: 119.9, oldPrice: 159.9 },
 ];
 
-export const products: Product[] = catalog;
+
+/** Fotos entregues pelo lojista: associação individual e exata, sem trocar cores/modelos. */
+export const suppliedPhotos: Record<string, string> = {
+  "pisca-branco-quente": "/produtos/pisca-branco-quente.avif",
+  "pisca-branco-frio": "/produtos/pisca-branco-frio.avif",
+  "pisca-colorido": "/produtos/pisca-colorido.avif",
+  "pisca-azul": "/produtos/pisca-azul.avif",
+  "fita-rgb": "/produtos/fita-rgb.avif",
+  "fita-rgb-controle": "/produtos/fita-rgb-controle.avif",
+};
+
+/**
+ * Todo item tem agora sua própria imagem.
+ * Itens sem foto do fornecedor usam uma ilustração vetorial individual (rascunho).
+ * Não reutilizar fotos de outra variante, nem deduzir especificações a partir da arte.
+ */
+export const products: Product[] = catalog.map((product) => {
+  const suppliedPhoto = suppliedPhotos[product.id];
+  return {
+    ...product,
+    image: suppliedPhoto ?? product.image ?? `/produtos/${product.id}.svg`,
+    imageOrigin: suppliedPhoto
+      ? "foto-enviada"
+      : product.image
+        ? product.imageIsConcept ? "ilustracao" : "catalogo-anterior"
+        : "ilustracao",
+    imageIsConcept: !suppliedPhoto && (product.imageIsConcept || !product.image),
+  };
+});
 export const getProduct = (id: string) => products.find((product) => product.id === id);
 export const getCategory = (id: Category) => categories.find((category) => category.id === id);
 export const formatBRL = (value: number) => value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });

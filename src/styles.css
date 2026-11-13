@@ -438,3 +438,15 @@ button:disabled { cursor: not-allowed; }
 }
 @media (max-width: 360px) { .products-grid { grid-template-columns: 1fr; } .category-grid { grid-template-columns: 1fr; } .hero-body h1 { font-size: 3.25rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+
+/* Fotos enviadas pelo lojista são exibidas completas, sem cortes na embalagem. */
+.product-visual-supplied { background: #201318; aspect-ratio: 1.5; }
+.product-visual-supplied .product-visual-image { object-fit: contain; }
+.product-visual-supplied .product-visual-note { background: #26121fce; }
+.detail-media .product-visual-supplied { aspect-ratio: 1.5; }
+.product-visual-image { image-rendering: auto; }
+@media (max-width: 760px) {
+  .product-visual-supplied { aspect-ratio: 1.5; }
+  .detail-media .product-visual-supplied { aspect-ratio: 1.5; }
+}

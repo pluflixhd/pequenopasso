@@ -9,9 +9,9 @@ export function ProductVisual({ product, large = false }: { product: Product; la
   const Icon = illustrations[product.category] ?? Layers3;
   const visualStyle = { "--art-hue": product.visualHue } as CSSProperties;
   return (
-    <div className={`product-visual ${large ? "product-visual-large" : ""}`} style={visualStyle}>
+    <div className={`product-visual ${large ? "product-visual-large" : ""} ${product.imageOrigin === "foto-enviada" ? "product-visual-supplied" : ""}`} style={visualStyle}>
       {product.image ? (
-        <img src={product.image} alt={product.imageIsConcept ? "Ilustração conceitual da embalagem natalina, não uma fotografia do kit" : `Imagem anterior do catálogo: ${product.name}`} loading={large ? "eager" : "lazy"} className="product-visual-image" />
+        <img src={product.image} alt={product.imageOrigin === "foto-enviada" ? `Imagem enviada do produto ${product.name}, dados técnicos pendentes de confirmação` : product.imageOrigin === "ilustracao" ? `Ilustração conceitual de ${product.name}` : `Imagem anterior do catálogo: ${product.name}`} loading={large ? "eager" : "lazy"} className="product-visual-image" />
       ) : (
         <div aria-hidden="true" className="product-visual-symbol">
           <span className="product-visual-halo" />
@@ -20,7 +20,7 @@ export function ProductVisual({ product, large = false }: { product: Product; la
           <span className="product-visual-orbit product-visual-orbit-two" />
         </div>
       )}
-      <span className="product-visual-note">{product.imageIsConcept ? "Imagem conceitual" : product.image ? "Foto anterior • validar" : "Visual ilustrativo • foto pendente"}</span>
+      <span className="product-visual-note">{product.imageOrigin === "foto-enviada" ? "Imagem enviada pelo lojista" : product.imageOrigin === "ilustracao" ? "Ilustração conceitual" : "Foto anterior • validar"}</span>
     </div>
   );
 }

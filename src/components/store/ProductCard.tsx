@@ -20,7 +20,7 @@ export function ProductVisual({ product, large = false }: { product: Product; la
           <span className="product-visual-orbit product-visual-orbit-two" />
         </div>
       )}
-      <span className="product-visual-note">{product.imageIsConcept ? "Imagem conceitual" : product.image ? "Foto anterior • validar" : "Visual ilustrativo • foto pendente"}</span>
+      <span className="product-visual-note">{product.imageOrigin === "foto-enviada" ? "Imagem enviada pelo lojista" : product.imageOrigin === "ilustracao" ? "Ilustração conceitual" : "Foto anterior • validar"}</span>
     </div>
   );
 }

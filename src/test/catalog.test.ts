@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { categories, getProduct, isPurchasable, products } from "@/data/products";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { categories, getProduct, isPurchasable, products, suppliedPhotos } from "@/data/products";
 
 describe("Catálogo Pequeno Passo", () => {
   it("preserva os três registros anteriores e prepara 35 propostas distintas", () => {
@@ -19,5 +21,28 @@ describe("Catálogo Pequeno Passo", () => {
     expect(isPurchasable({ ...kit!, status: "publicado", price: 159, checkoutUrl: "#" })).toBe(false);
     expect(isPurchasable({ ...kit!, status: "rascunho", price: 159, checkoutUrl: "https://checkout.example.com/kit" })).toBe(false);
     expect(isPurchasable({ ...kit!, status: "publicado", price: 159, checkoutUrl: "https://checkout.example.com/kit" })).toBe(true);
+  });
+  it("associa as seis fotos enviadas aos modelos e variantes corretos", () => {
+    expect(suppliedPhotos).toEqual({
+      "pisca-branco-quente": "/produtos/pisca-branco-quente.avif",
+      "pisca-branco-frio": "/produtos/pisca-branco-frio.avif",
+      "pisca-colorido": "/produtos/pisca-colorido.avif",
+      "pisca-azul": "/produtos/pisca-azul.avif",
+      "fita-rgb": "/produtos/fita-rgb.avif",
+      "fita-rgb-controle": "/produtos/fita-rgb-controle.avif",
+    });
+    expect(Object.values(suppliedPhotos).every((path) => path.endsWith(".avif"))).toBe(true);
+  });
+
+  it("mostra uma imagem exclusiva existente para cada item do catálogo", () => {
+    const images = products.map((p) => p.image).filter((url): url is string => !!url);
+    expect(images).toHaveLength(products.length);
+    expect(new Set(images).size).toBe(products.length);
+    for (const product of products) {
+      expect(product.image).toBeTruthy();
+      if (product.image?.startsWith("/")) {
+        expect(existsSync(join(process.cwd(), "public", product.image.slice(1)))).toBe(true);
+      }
+    }
   });
 });

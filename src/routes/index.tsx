@@ -138,13 +138,6 @@ function ProductDetail({ product }: { product: Product }) {
     <div className="product-breadcrumb"><a href="/">Início</a><span>/</span><a href={`/?categoria=${product.category}`}>{getCategory(product.category)?.label}</a><span>/</span><span>{product.name}</span></div>
     <div className="product-detail"><div className="detail-media">
       {product.image ? <a href={product.image} target="_blank" rel="noopener noreferrer" aria-label={`Abrir imagem completa de ${product.name}`}><ProductVisual product={product} large/></a> : <ProductVisual product={product} large/>}
-      <p className="media-disclaimer"><ShieldCheck size={16}/>
-        {product.imageOrigin === "foto-enviada"
-          ? "Imagem enviada para este modelo. Confirme com o fornecedor que a embalagem e os dados impressos correspondem ao SKU real. Clique na imagem para ampliar."
-          : product.imageOrigin === "gerada-ia"
-            ? "Imagem fotorrealista gerada por IA para apresentação. Não é foto do produto do fornecedor; materiais, acessórios e especificações precisam de confirmação. Clique para ampliar em Full HD."
-            : "Foto já existente no catálogo anterior. Confirme os dados e a disponibilidade antes de publicar."}
-      </p>
     </div>
     <div className="detail-copy"><span className="eyebrow">PEQUENO PASSO · EDIÇÃO NATALINA</span><h1>{product.name}</h1><div className="detail-rule"/><p className="detail-lead">{product.id === "caixa-magica-papai-noel" ? "Uma apresentação especial para transformar um simples momento em uma lembrança inesquecível." : product.description}</p>
       {product.id === "caixa-magica-papai-noel" && <div className="detail-story"><p>Imagine a emoção de abrir uma caixa e encontrar tudo preparado para dar vida ao personagem mais querido do Natal.</p><p>A Caixa Mágica do Papai Noel foi pensada para quem deseja transformar a noite de Natal em um espetáculo de alegria, surpresa e encantamento.</p><p>Seja para surpreender as crianças, criar momentos especiais em família ou preparar uma visita inesquecível, a proposta é transformar a tradição em uma experiência cheia de personalidade.</p><strong>Neste Natal, não entregue apenas presentes. Entregue a magia de quem chegou para trazê-los.</strong></div>}

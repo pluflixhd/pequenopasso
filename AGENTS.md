@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Keep generated product visuals in an explicit browser-safe image import map and distinguish their origin from supplier photographs; this prevents variant mismatches and misleading image provenance.

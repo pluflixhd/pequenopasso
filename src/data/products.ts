@@ -1,6 +1,7 @@
 import bolas from "@/assets/p-bolas.jpg";
 import guirlanda from "@/assets/p-guirlanda.jpg";
 import vela from "@/assets/p-vela.jpg";
+import { generatedImages } from "@/data/product-images";
 
 /** Catálogo editorial: somente itens confirmados pelo lojista podem ser publicados. */
 export type Category = "kits" | "piscas" | "cortinas" | "fitas" | "decoracao";
@@ -15,7 +16,7 @@ export interface Product {
   /** Fotos devem ser reais e corresponder ao SKU. Ilustração não prova composição. */
   image?: string;
   imageIsConcept?: boolean;
-  imageOrigin?: "foto-enviada" | "ilustracao" | "catalogo-anterior";
+  imageOrigin?: "foto-enviada" | "ilustracao" | "catalogo-anterior" | "gerada-ia";
   visualHue: number;
   price?: number;
   oldPrice?: number;
@@ -110,20 +111,21 @@ export const suppliedPhotos: Record<string, string> = {
 
 /**
  * Todo item tem agora sua própria imagem.
- * Itens sem foto do fornecedor usam uma ilustração vetorial individual (rascunho).
+ * Itens sem foto do fornecedor usam uma imagem fotorrealista individual gerada por IA.
  * Não reutilizar fotos de outra variante, nem deduzir especificações a partir da arte.
  */
 export const products: Product[] = catalog.map((product) => {
   const suppliedPhoto = suppliedPhotos[product.id];
+  const generatedImage = generatedImages[product.id];
+  const image = suppliedPhoto ?? generatedImage ?? product.image;
+  if (!image) throw new Error(`Imagem ausente para o produto ${product.id}`);
   return {
     ...product,
-    image: suppliedPhoto ?? product.image ?? `/produtos/${product.id}.svg`,
+    image,
     imageOrigin: suppliedPhoto
       ? "foto-enviada"
-      : product.image
-        ? product.imageIsConcept ? "ilustracao" : "catalogo-anterior"
-        : "ilustracao",
-    imageIsConcept: !suppliedPhoto && (product.imageIsConcept || !product.image),
+      : generatedImage ? "gerada-ia" : "catalogo-anterior",
+    imageIsConcept: Boolean(generatedImage),
   };
 });
 export const getProduct = (id: string) => products.find((product) => product.id === id);

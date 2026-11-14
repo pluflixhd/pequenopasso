@@ -1,26 +1,14 @@
-import { ArrowUpRight, Gift, Sparkles, Lightbulb, TreePine, Stars, Layers3 } from "lucide-react";
-import type { CSSProperties } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { Product } from "@/data/products";
 import { formatBRL, isPurchasable } from "@/data/products";
 
-const illustrations = { kits: Gift, piscas: Sparkles, cortinas: Stars, fitas: Lightbulb, decoracao: TreePine };
-
 export function ProductVisual({ product, large = false }: { product: Product; large?: boolean }) {
-  const Icon = illustrations[product.category] ?? Layers3;
-  const visualStyle = { "--art-hue": product.visualHue } as CSSProperties;
+  const generated = product.imageOrigin === "gerada-ia";
   return (
-    <div className={`product-visual ${large ? "product-visual-large" : ""} ${product.imageOrigin === "foto-enviada" ? "product-visual-supplied" : ""}`} style={visualStyle}>
-      {product.image ? (
-        <img src={product.image} alt={product.imageOrigin === "foto-enviada" ? `Imagem enviada do produto ${product.name}, dados técnicos pendentes de confirmação` : product.imageOrigin === "ilustracao" ? `Ilustração conceitual de ${product.name}` : `Imagem anterior do catálogo: ${product.name}`} loading={large ? "eager" : "lazy"} className="product-visual-image" />
-      ) : (
-        <div aria-hidden="true" className="product-visual-symbol">
-          <span className="product-visual-halo" />
-          <Icon strokeWidth={0.7} className="product-visual-icon" />
-          <span className="product-visual-orbit product-visual-orbit-one" />
-          <span className="product-visual-orbit product-visual-orbit-two" />
-        </div>
-      )}
-      <span className="product-visual-note">{product.imageOrigin === "foto-enviada" ? "Imagem enviada pelo lojista" : product.imageOrigin === "ilustracao" ? "Ilustração conceitual" : "Foto anterior • validar"}</span>
+    <div className={cn("product-visual", large && "product-visual-large", generated && "product-visual-generated", product.imageOrigin === "foto-enviada" && "product-visual-supplied")}>
+      <img src={product.image} alt={generated ? `Imagem fotorrealista gerada por IA de ${product.name}` : product.imageOrigin === "foto-enviada" ? `Imagem enviada do produto ${product.name}, dados técnicos pendentes de confirmação` : `Imagem anterior do catálogo: ${product.name}`} loading={large ? "eager" : "lazy"} decoding="async" width={1920} height={1080} className="product-visual-image" />
+      <span className="product-visual-note">{generated ? "Imagem gerada por IA" : product.imageOrigin === "foto-enviada" ? "Imagem enviada pelo lojista" : "Foto anterior • validar"}</span>
     </div>
   );
 }

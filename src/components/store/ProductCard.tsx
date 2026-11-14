@@ -5,14 +5,28 @@ import { formatBRL, isPurchasable } from "@/data/products";
 
 export function ProductVisual({ product, large = false }: { product: Product; large?: boolean }) {
   const generated = product.imageOrigin === "gerada-ia";
+
   return (
-    <div className={cn("product-visual", large && "product-visual-large", generated && "product-visual-generated", product.imageOrigin === "foto-enviada" && "product-visual-supplied")}>
-      <img src={product.image} alt={generated ? `Imagem fotorrealista gerada por IA de ${product.name}` : product.imageOrigin === "foto-enviada" ? `Imagem enviada do produto ${product.name}, dados técnicos pendentes de confirmação` : `Imagem anterior do catálogo: ${product.name}`} loading={large ? "eager" : "lazy"} decoding="async" width={1920} height={1080} className="product-visual-image" />
-      <span className="product-visual-note">{generated ? "Imagem gerada por IA" : product.imageOrigin === "foto-enviada" ? "Imagem enviada pelo lojista" : "Foto anterior • validar"}</span>
+    <div
+      className={cn(
+        "product-visual",
+        large && "product-visual-large",
+        generated && "product-visual-generated",
+        product.imageOrigin === "foto-enviada" && "product-visual-supplied",
+      )}
+    >
+      <img
+        src={product.image}
+        alt={generated ? `Imagem ilustrativa de ${product.name}` : `Imagem de ${product.name}`}
+        loading={large ? "eager" : "lazy"}
+        decoding="async"
+        width={1920}
+        height={1080}
+        className="product-visual-image"
+      />
     </div>
   );
 }
-
 export function ProductCard({ product }: { product: Product }) {
   const purchasable = isPurchasable(product);
   return (

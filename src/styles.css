@@ -446,6 +446,11 @@ button:disabled { cursor: not-allowed; }
 .product-visual-supplied .product-visual-note { background: #26121fce; }
 .detail-media .product-visual-supplied { aspect-ratio: 1.5; }
 .product-visual-image { image-rendering: auto; }
+.product-visual-generated { background: var(--muted); aspect-ratio: 16 / 9; }
+.product-visual-generated::after { display: none; }
+.product-visual-generated .product-visual-image { object-fit: contain; }
+.detail-media .product-visual-generated { aspect-ratio: 16 / 9; }
+.editorial-art > .product-visual { height: 100%; min-height: 350px; }
 @media (max-width: 760px) {
   .product-visual-supplied { aspect-ratio: 1.5; }
   .detail-media .product-visual-supplied { aspect-ratio: 1.5; }

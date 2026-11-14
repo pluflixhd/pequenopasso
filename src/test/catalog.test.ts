@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { categories, getProduct, isPurchasable, products, suppliedPhotos } from "@/data/products";
+import { generatedImages } from "@/data/product-images";
 
 describe("Catálogo Pequeno Passo", () => {
   it("preserva os três registros anteriores e prepara 35 propostas distintas", () => {
@@ -12,15 +13,17 @@ describe("Catálogo Pequeno Passo", () => {
   it("não permite vender rascunhos com valores ou checkouts não validados", () => {
     const antigo = getProduct("bolas");
     expect(antigo).toBeDefined();
-    expect(isPurchasable(antigo!)).toBe(false);
+    if (!antigo) throw new Error("Produto anterior ausente");
+    expect(isPurchasable(antigo)).toBe(false);
     expect(products.every((product) => !isPurchasable(product))).toBe(true);
   });
   it("exige publicação, preço e checkout https para autorizar compra", () => {
     const kit = getProduct("caixa-magica-papai-noel");
     expect(kit).toBeDefined();
-    expect(isPurchasable({ ...kit!, status: "publicado", price: 159, checkoutUrl: "#" })).toBe(false);
-    expect(isPurchasable({ ...kit!, status: "rascunho", price: 159, checkoutUrl: "https://checkout.example.com/kit" })).toBe(false);
-    expect(isPurchasable({ ...kit!, status: "publicado", price: 159, checkoutUrl: "https://checkout.example.com/kit" })).toBe(true);
+    if (!kit) throw new Error("Kit ausente");
+    expect(isPurchasable({ ...kit, status: "publicado", price: 159, checkoutUrl: "#" })).toBe(false);
+    expect(isPurchasable({ ...kit, status: "rascunho", price: 159, checkoutUrl: "https://checkout.example.com/kit" })).toBe(false);
+    expect(isPurchasable({ ...kit, status: "publicado", price: 159, checkoutUrl: "https://checkout.example.com/kit" })).toBe(true);
   });
   it("associa as seis fotos enviadas aos modelos e variantes corretos", () => {
     expect(suppliedPhotos).toEqual({
@@ -43,6 +46,23 @@ describe("Catálogo Pequeno Passo", () => {
       if (product.image?.startsWith("/produtos/") || product.image === "/caixa-magica-conceito.svg") {
         expect(existsSync(join(process.cwd(), "public", product.image.slice(1)))).toBe(true);
       }
+    }
+  });
+  it("substitui todas as 29 ilustrações por imagens fotorrealistas individuais", () => {
+    expect(Object.keys(generatedImages)).toHaveLength(29);
+    expect(products.some((product) => product.image?.endsWith(".svg"))).toBe(false);
+    for (const [id, image] of Object.entries(generatedImages)) {
+      expect(getProduct(id)?.image).toBe(image);
+      expect(getProduct(id)?.imageOrigin).toBe("gerada-ia");
+    }
+  });
+  it("mantém as fotos enviadas separadas das imagens geradas", () => {
+    for (const [id, image] of Object.entries(suppliedPhotos)) {
+      expect(getProduct(id)?.image).toBe(image);
+      expect(getProduct(id)?.imageOrigin).toBe("foto-enviada");
+    }
+    for (const id of ["bolas", "guirlanda", "vela"]) {
+      expect(getProduct(id)?.imageOrigin).toBe("catalogo-anterior");
     }
   });
 });

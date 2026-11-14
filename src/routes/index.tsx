@@ -9,8 +9,8 @@ import { Countdown } from "@/components/store/Countdown";
 
 export const Route = createFileRoute("/")({
   validateSearch: (query: Record<string, unknown>) => ({
-    produto: typeof query.produto === "string" ? query.produto : undefined,
-    categoria: typeof query.categoria === "string" ? query.categoria : undefined,
+    produto: typeof query["produto"] === "string" ? query["produto"] : undefined,
+    categoria: typeof query["categoria"] === "string" ? query["categoria"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -109,7 +109,7 @@ function Home() {
     </section>
     <section className="editorial-banner">
       <div className="editorial-copy"><span className="eyebrow">O PRESENTE É A EXPERIÊNCIA</span><h2>A magia do Natal começa quando o Papai Noel chega.</h2><p>Imagine abrir uma caixa e encontrar o início de uma noite inesquecível. A Caixa Mágica está sendo preparada para fazer parte de encontros especiais, celebrações e lembranças em família.</p><strong>“Neste Natal, não entregue apenas presentes. Entregue a magia de quem chegou para trazê-los.”</strong><a href="/?produto=caixa-magica-papai-noel" className="btn-gold">Conhecer a Caixa Mágica <ArrowUpRight size={18}/></a></div>
-      <div className="editorial-art"><span className="editorial-orbit"/><Gift size={118} strokeWidth={0.6}/><span className="editorial-stamp">PEQUENO PASSO · NATAL 2026</span></div>
+      <div className="editorial-art">{kit && <ProductVisual product={kit} large/>}</div>
     </section>
     <CollectionSection id="colecao" eyebrow="A LUZ DA TEMPORADA" title="Iluminação mágica de Natal" description="Transforme cada cantinho em um cenário acolhedor. Descubra propostas de luzes que valorizam a decoração e os encontros de dezembro." href="/?categoria=piscas" items={products.filter((p) => p.category === "piscas").slice(0,4)}/>
     <div className="interlude"><Sparkles size={23}/><p>ACENDA A MAGIA DO NATAL.</p><span>Um detalhe de luz muda toda a atmosfera.</span><a href="/?categoria=cortinas">Descobrir iluminação natalina <ArrowUpRight size={17}/></a></div>
@@ -119,7 +119,7 @@ function Home() {
     <section className="final-cta"><span className="eyebrow">UM NATAL PARA CHAMAR DE SEU</span><h2>Os melhores momentos começam com um pequeno passo.</h2><p>Descubra a coleção especial e encontre a inspiração para celebrar.</p><a href="/?categoria=todos" className="btn-gold">Explorar catálogo completo <ArrowUpRight size={17}/></a></section>
   </main>;
 }
-function Catalog({ category }: { category?: Category }) {
+function Catalog({ category }: { category: Category | undefined }) {
   const [term, setTerm] = useState("");
   const [selected, setSelected] = useState<Category | "todos">(category || "todos");
   const list = useMemo(() => products.filter((p) => (selected === "todos" || p.category === selected) && `${p.name} ${p.description}`.toLowerCase().includes(term.trim().toLowerCase())), [term, selected]);
@@ -141,8 +141,8 @@ function ProductDetail({ product }: { product: Product }) {
       <p className="media-disclaimer"><ShieldCheck size={16}/>
         {product.imageOrigin === "foto-enviada"
           ? "Imagem enviada para este modelo. Confirme com o fornecedor que a embalagem e os dados impressos correspondem ao SKU real. Clique na imagem para ampliar."
-          : product.imageOrigin === "ilustracao"
-            ? "Ilustração conceitual individual. Não representa fotografia do produto final, acessórios ou especificações confirmadas."
+          : product.imageOrigin === "gerada-ia"
+            ? "Imagem fotorrealista gerada por IA para apresentação. Não é foto do produto do fornecedor; materiais, acessórios e especificações precisam de confirmação. Clique para ampliar em Full HD."
             : "Foto já existente no catálogo anterior. Confirme os dados e a disponibilidade antes de publicar."}
       </p>
     </div>

@@ -11,7 +11,7 @@ interface ShippingQuote {
   /** A verificação de primeira compra ocorre no servidor autenticado. */
   firstPurchaseFreeApplied: boolean;
 }
-const endpoint = import.meta.env.VITE_SHIPPING_QUOTE_ENDPOINT as string | undefined;
+const endpoint = import.meta.env["VITE_SHIPPING_QUOTE_ENDPOINT"] as string | undefined;
 
 export function ShippingEstimator() {
   const [cep, setCep] = useState("");

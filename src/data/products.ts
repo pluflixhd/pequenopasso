@@ -117,9 +117,11 @@ export const suppliedPhotos: Record<string, string> = {
 export const products: Product[] = catalog.map((product) => {
   const suppliedPhoto = suppliedPhotos[product.id];
   const generatedImage = generatedImages[product.id];
+  const image = suppliedPhoto ?? generatedImage ?? product.image;
+  if (!image) throw new Error(`Imagem ausente para o produto ${product.id}`);
   return {
     ...product,
-    image: suppliedPhoto ?? generatedImage ?? product.image,
+    image,
     imageOrigin: suppliedPhoto
       ? "foto-enviada"
       : generatedImage ? "gerada-ia" : "catalogo-anterior",
